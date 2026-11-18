@@ -4,6 +4,10 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import type { TablesInsert, TablesUpdate } from "@/integrations/supabase/types";
 
+// The generic table name defeats the generated column types, so writes go through a loosely typed handle.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const db = supabase as unknown as { from: (table: string) => any };
+
 type TableName =
   | "tasks"
   | "study_subjects"
@@ -46,7 +50,7 @@ export function useTable<T extends TableName>(table: T, options: { related?: Que
 
   const create = useMutation({
     mutationFn: async (values: TablesInsert<T>) => {
-      const { data, error } = await supabase.from(table).insert(values as never).select().single();
+      const { data, error } = await db.from(table).insert(values as never).select().single();
       if (error) throw error;
       return data as unknown as Row;
     },
@@ -62,7 +66,7 @@ export function useTable<T extends TableName>(table: T, options: { related?: Que
 
   const update = useMutation({
     mutationFn: async ({ id, values }: { id: string; values: TablesUpdate<T> }) => {
-      const { data, error } = await supabase.from(table).update(values as never).eq("id", id).select().single();
+      const { data, error } = await db.from(table).update(values as never).eq("id", id).select().single();
       if (error) throw error;
       return data as unknown as Row;
     },
@@ -77,7 +81,7 @@ export function useTable<T extends TableName>(table: T, options: { related?: Que
 
   const remove = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from(table).delete().eq("id", id);
+      const { error } = await db.from(table).delete().eq("id", id);
       if (error) throw error;
       return id;
     },
@@ -113,7 +117,7 @@ export function useToggleHabit() {
       qc.setQueryData<Row[]>(key, (old = []) =>
         done
           ? [{ id: `temp-${habitId}-${date}`, habit_id: habitId, log_date: date } as Row, ...old]
-          : old.filter((l) => !(l.habit_id === habitId && l.log_date === date)),
+          : old.filter((l) => !(l["habit_id"] === habitId && l["log_date"] === date)),
       );
       return { prev };
     },

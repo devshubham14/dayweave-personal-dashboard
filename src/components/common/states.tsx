@@ -15,10 +15,10 @@ export function EmptyState({
 }: {
   icon: LucideIcon;
   title: string;
-  description?: ReactNode;
-  action?: ReactNode;
-  className?: string;
-  compact?: boolean;
+  description?: (ReactNode) | undefined;
+  action?: (ReactNode) | undefined;
+  className?: (string) | undefined;
+  compact?: (boolean) | undefined;
 }) {
   return (
     <div
@@ -46,10 +46,10 @@ export function ErrorState({
   onRetry,
   className,
 }: {
-  title?: string;
-  description?: string;
-  onRetry?: () => void;
-  className?: string;
+  title?: (string) | undefined;
+  description?: (string) | undefined;
+  onRetry?: (() => void) | undefined;
+  className?: (string) | undefined;
 }) {
   return (
     <div className={cn("surface flex flex-col items-center gap-3 px-6 py-14 text-center", className)}>

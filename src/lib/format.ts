@@ -73,13 +73,15 @@ export function greetingFor(date: Date): string {
 export function firstName(fullName: string | null | undefined): string {
   const name = (fullName ?? "").trim();
   if (!name) return "there";
-  return name.split(/\s+/)[0];
+  return name.split(/\s+/)[0] ?? "there";
 }
 
 export function initials(fullName: string | null | undefined, fallback = "?"): string {
   const parts = (fullName ?? "").trim().split(/\s+/).filter(Boolean);
   if (parts.length === 0) return fallback;
-  return (parts[0][0] + (parts.length > 1 ? parts[parts.length - 1][0] : "")).toUpperCase();
+  const first = parts[0]?.[0] ?? "";
+  const last = parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? "") : "";
+  return (first + last).toUpperCase() || fallback;
 }
 
 /** Human label for a due date relative to today. */
@@ -111,5 +113,5 @@ export function shortTime(t: string): string {
 
 export function timeToMinutes(t: string): number {
   const [h, m] = t.split(":").map(Number);
-  return h * 60 + (m || 0);
+  return (h ?? 0) * 60 + (m || 0);
 }

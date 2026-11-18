@@ -7,7 +7,7 @@ export function ProgressBar({
 }: {
   /** 0–100 */
   value: number;
-  className?: string;
+  className?: (string) | undefined;
   barClassName?: string;
 }) {
   const v = Math.max(0, Math.min(100, value));

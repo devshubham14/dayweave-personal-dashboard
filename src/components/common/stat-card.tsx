@@ -16,7 +16,7 @@ export function StatCard({
   value: ReactNode;
   icon: LucideIcon;
   change?: number | null;
-  hint?: ReactNode;
+  hint?: (ReactNode) | undefined;
   invert?: boolean;
 }) {
   const hasChange = typeof change === "number";

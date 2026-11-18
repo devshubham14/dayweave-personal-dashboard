@@ -6,7 +6,7 @@ import { Wordmark } from "@/components/layout/wordmark";
 import { tasksQuery } from "@/lib/data/queries";
 import { cn } from "@/lib/utils";
 
-function NavLink({ item, active, badge, onNavigate }: { item: NavItem; active: boolean; badge?: number; onNavigate?: () => void }) {
+function NavLink({ item, active, badge, onNavigate }: { item: NavItem; active: boolean; badge?: number | undefined; onNavigate?: (() => void) | undefined }) {
   const Icon = item.icon;
   return (
     <Link
@@ -25,7 +25,7 @@ function NavLink({ item, active, badge, onNavigate }: { item: NavItem; active: b
   );
 }
 
-export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
+export function SidebarContent({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { data: tasks } = useQuery(tasksQuery);
   const openTasks = tasks?.filter((t) => t.status !== "done").length;

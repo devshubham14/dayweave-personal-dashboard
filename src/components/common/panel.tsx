@@ -11,11 +11,11 @@ export function Panel({
   bodyClassName,
   flush = false,
 }: {
-  title?: ReactNode;
-  description?: ReactNode;
-  action?: ReactNode;
+  title?: (ReactNode) | undefined;
+  description?: (ReactNode) | undefined;
+  action?: (ReactNode) | undefined;
   children: ReactNode;
-  className?: string;
+  className?: (string) | undefined;
   bodyClassName?: string;
   /** Remove body padding (for lists and tables that run edge to edge). */
   flush?: boolean;

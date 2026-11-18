@@ -49,7 +49,7 @@ function SimpleSelect({
 
 /* ------------------------------------------------------------------ Task */
 
-export function TaskDialog({ open, onOpenChange, task, defaults }: BaseProps & { task?: Task; defaults?: Partial<Task> }) {
+export function TaskDialog({ open, onOpenChange, task, defaults }: BaseProps & { task?: Task | undefined; defaults?: Partial<Task> | undefined }) {
   const { create, update, remove } = useTable("tasks");
   const { data: tasks = [] } = useQuery(tasksQuery);
   const projects = Array.from(new Set(["Personal", "Coursework", "Internship", "Career", "Health", ...tasks.map((t) => t.project)]));
@@ -148,7 +148,7 @@ export function TaskDialog({ open, onOpenChange, task, defaults }: BaseProps & {
 
 /* --------------------------------------------------------------- Expense */
 
-export function ExpenseDialog({ open, onOpenChange, expense }: BaseProps & { expense?: Expense }) {
+export function ExpenseDialog({ open, onOpenChange, expense }: BaseProps & { expense?: Expense | undefined }) {
   const { create, update, remove } = useTable("expenses");
   const { data: profile } = useQuery(profileQuery);
   const currency = profile?.currency ?? "INR";
@@ -231,7 +231,7 @@ export function SessionDialog({
   onOpenChange,
   session,
   defaults,
-}: BaseProps & { session?: StudySession; defaults?: Partial<StudySession> }) {
+}: BaseProps & { session?: StudySession | undefined; defaults?: Partial<StudySession> | undefined }) {
   const { create, update, remove } = useTable("study_sessions");
   const { data: subjects = [] } = useQuery(subjectsQuery);
 
@@ -308,7 +308,7 @@ export function SessionDialog({
 
 /* ----------------------------------------------------------------- Event */
 
-export function EventDialog({ open, onOpenChange, event, date }: BaseProps & { event?: CalendarEvent; date?: string }) {
+export function EventDialog({ open, onOpenChange, event, date }: BaseProps & { event?: CalendarEvent | undefined; date?: string | undefined }) {
   const { create, update, remove } = useTable("events");
   const [title, setTitle] = useState(event?.title ?? "");
   const [day, setDay] = useState(event?.event_date ?? date ?? todayISO());
@@ -381,7 +381,7 @@ export function EventDialog({ open, onOpenChange, event, date }: BaseProps & { e
 
 /* ----------------------------------------------------------------- Habit */
 
-export function HabitDialog({ open, onOpenChange, habit }: BaseProps & { habit?: Habit }) {
+export function HabitDialog({ open, onOpenChange, habit }: BaseProps & { habit?: Habit | undefined }) {
   const { create, update, remove } = useTable("habits", { related: [["habit_logs"]] });
   const [name, setName] = useState(habit?.name ?? "");
   const [target, setTarget] = useState(String(habit?.target_per_week ?? 7));
@@ -437,7 +437,7 @@ export function HabitDialog({ open, onOpenChange, habit }: BaseProps & { habit?:
 
 /* --------------------------------------------------------------- Subject */
 
-export function SubjectDialog({ open, onOpenChange, subject }: BaseProps & { subject?: Subject }) {
+export function SubjectDialog({ open, onOpenChange, subject }: BaseProps & { subject?: Subject | undefined }) {
   const { create, update, remove } = useTable("study_subjects", { related: [["study_sessions"], ["exams"]] });
   const [name, setName] = useState(subject?.name ?? "");
   const [goal, setGoal] = useState(String(subject?.weekly_goal_hours ?? 5));
@@ -492,7 +492,7 @@ export function SubjectDialog({ open, onOpenChange, subject }: BaseProps & { sub
 
 /* ------------------------------------------------------------------ Exam */
 
-export function ExamDialog({ open, onOpenChange, exam }: BaseProps & { exam?: Exam }) {
+export function ExamDialog({ open, onOpenChange, exam }: BaseProps & { exam?: Exam | undefined }) {
   const { create, update, remove } = useTable("exams");
   const { data: subjects = [] } = useQuery(subjectsQuery);
   const [title, setTitle] = useState(exam?.title ?? "");

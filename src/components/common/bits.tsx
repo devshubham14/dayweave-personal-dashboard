@@ -43,11 +43,11 @@ export function Field({
   className,
 }: {
   label: string;
-  htmlFor?: string;
-  error?: string | null;
-  hint?: string;
+  htmlFor?: (string) | undefined;
+  error?: (string | null) | undefined;
+  hint?: (string) | undefined;
   children: ReactNode;
-  className?: string;
+  className?: (string) | undefined;
 }) {
   return (
     <div className={cn("space-y-1.5", className)}>
@@ -75,8 +75,8 @@ export function Segmented<T extends string>({
   value: T;
   onChange: (v: T) => void;
   options: { value: T; label: ReactNode; count?: number }[];
-  className?: string;
-  ariaLabel?: string;
+  className?: (string) | undefined;
+  ariaLabel?: (string) | undefined;
 }) {
   return (
     <div role="tablist" aria-label={ariaLabel} className={cn("inline-flex h-8 items-center rounded-md border bg-muted p-0.5", className)}>
